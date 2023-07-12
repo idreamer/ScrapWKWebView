@@ -6,6 +6,9 @@ final class ScrapWKWebViewTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(ScrapWKWebView().text, "Hello, World!")
+        let webView = ScrapWKWebView(url: "https://google.com", timeout: 2.0) { html in
+            print("HTML: \(html)")
+        }
+        
     }
 }
