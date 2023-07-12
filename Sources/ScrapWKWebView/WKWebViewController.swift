@@ -11,7 +11,7 @@ import WebKit
 
 let MESSAGE_HANDLER_NAME = "WKWebViewMessageHandler"
 
-final class WKWebViewController: UIViewController {
+public final class WKWebViewController: UIViewController {
     private let spinner: UIActivityIndicatorView = {
         if #available(iOS 13.0, *) {
             return UIActivityIndicatorView(style: .large)
@@ -55,7 +55,7 @@ final class WKWebViewController: UIViewController {
     
     required init?(coder: NSCoder) { fatalError() }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         
@@ -74,7 +74,7 @@ final class WKWebViewController: UIViewController {
 }
 
 extension WKWebViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         let javascript = """
         var outerHTML = document.documentElement.outerHTML.toString();
         var message = {"type": "outerHTML", "outerHTML": outerHTML };
@@ -102,7 +102,7 @@ extension WKWebViewController: WKNavigationDelegate {
 }
 
 extension WKWebViewController: WKScriptMessageHandler {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let body = message.body as? [String: Any] else {
             print("could not convert message body to dictionary: \(message.body)")
             return

@@ -14,13 +14,13 @@ protocol ScrapWKWebViewDelegate {
 }
 
 @available(iOS 13.0, *)
-struct ScrapWKWebView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = WKWebViewController
-    var url: String
-    var getHTML: (_ html: String) -> Void
-    var timeout: Double = 2.0
+public struct ScrapWKWebView: UIViewControllerRepresentable {
+    public typealias UIViewControllerType = WKWebViewController
+    public var url: String
+    public var getHTML: (_ html: String) -> Void
+    public var timeout: Double = 2.0
     
-    class Coordinator: NSObject, ScrapWKWebViewDelegate {
+    public class Coordinator: NSObject, ScrapWKWebViewDelegate {
         func getHTML(html: String) {
             self.parent.getHTML(html)
         }
@@ -32,7 +32,7 @@ struct ScrapWKWebView: UIViewControllerRepresentable {
         }
     }
     
-    func makeUIViewController(context: Context) -> WKWebViewController {
+    public func makeUIViewController(context: Context) -> UIViewControllerType {
         let vc = WKWebViewController()
         vc.delegate = context.coordinator
         vc.timeout = timeout
@@ -40,11 +40,11 @@ struct ScrapWKWebView: UIViewControllerRepresentable {
         return vc
     }
     
-    func updateUIViewController(_ uiViewController: WKWebViewController, context: Context) {
+    public func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         
     }
     
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
     }
     
