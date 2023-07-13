@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "ScrapWKWebView",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v13),
     ],
     products: [
         .library(
@@ -18,8 +18,5 @@ let package = Package(
         .target(
             name: "ScrapWKWebView",
             dependencies: []),
-        .testTarget(
-            name: "ScrapWKWebViewTests",
-            dependencies: ["ScrapWKWebView"]),
     ]
 )
