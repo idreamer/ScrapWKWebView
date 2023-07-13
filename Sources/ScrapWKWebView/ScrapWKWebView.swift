@@ -20,6 +20,12 @@ public struct ScrapWKWebView: UIViewControllerRepresentable {
     public var getHTML: (_ html: String) -> Void
     public var timeout: Double = 2.0
     
+    public init(url: String, getHTML: @escaping (_: String) -> Void, timeout: Double) {
+        self.url = url
+        self.getHTML = getHTML
+        self.timeout = timeout
+    }
+    
     public class Coordinator: NSObject, ScrapWKWebViewDelegate {
         func getHTML(html: String) {
             self.parent.getHTML(html)
