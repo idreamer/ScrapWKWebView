@@ -16,9 +16,9 @@ protocol ScrapWKWebViewDelegate {
 @available(iOS 13.0, *)
 public struct ScrapWKWebView: UIViewControllerRepresentable {
     public typealias UIViewControllerType = WKWebViewController
-    public var url: String
-    public var getHTML: (_ html: String) -> Void
-    public var timeout: Double = 2.0
+    var url: String
+    var getHTML: (_ html: String) -> Void
+    var timeout: Double = 2.0
     
     public init(url: String, getHTML: @escaping (_: String) -> Void, timeout: Double) {
         self.url = url
