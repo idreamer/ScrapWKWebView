@@ -10,3 +10,14 @@ This package provides a seamless integration of the WKWebView within a SwiftUI V
             // SwiftSoup could be a way to easily do it
         }
 ```
+
+### hide the view
+It's a SwiftUI view. You can use any modifier to manipulate ScrapWKWebView.
+
+```
+        ScrapWKWebView(url: "https://google.com", timeout: 2.0) { html in
+            // Write your own logic to extract a data from the raw html
+            // SwiftSoup could be a way to easily do it
+        }
+        .hidden()
+```

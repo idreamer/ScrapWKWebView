@@ -47,7 +47,7 @@ public struct ScrapWKWebView: UIViewControllerRepresentable {
     }
     
     public func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
+        uiViewController.webURL = url
     }
     
     public func makeCoordinator() -> Coordinator {
