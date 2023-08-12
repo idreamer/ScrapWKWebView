@@ -103,11 +103,11 @@ extension WKWebViewController: WKScriptMessageHandler {
         
         switch type {
         case "outerHTML":
-            guard let outerHTML = body["outerHTML"] as? String else {
+            guard let outerHTML = body["outerHTML"] as? String, let delegate = self.delegate else {
                 print("could not convert body[\"outerHTML\"] to string: \(body)")
                 return
             }
-            self.delegate?.getHTML(html: outerHTML)
+            delegate.getHTML(html: outerHTML)
         default:
             print("unknown message type \(type)")
             return
