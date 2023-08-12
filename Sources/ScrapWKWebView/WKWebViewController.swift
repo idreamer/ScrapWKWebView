@@ -23,6 +23,7 @@ public final class WKWebViewController: UIViewController {
     var delegate: ScrapWKWebViewDelegate?
     var timeout: Double = 2.0
     var webView: WKWebView!
+    var showWebView = false
     
     var webURL: String = "" {
         didSet {
@@ -36,19 +37,18 @@ public final class WKWebViewController: UIViewController {
         
         self.webView = {
             let webConfiguration = WKWebViewConfiguration()
-            let wkUserController = WKUserContentController()
             
-            wkUserController.add(self, name: MESSAGE_HANDLER_NAME)
-            
-            webConfiguration.userContentController = wkUserController
-            
+            if !showWebView {
+                let wkUserController = WKUserContentController()
+                wkUserController.add(self, name: MESSAGE_HANDLER_NAME)
+                webConfiguration.userContentController = wkUserController
+            }
             let webView = WKWebView(frame: .zero, configuration: webConfiguration)
             
             if #available(iOS 16.4, *) {
                 webView.isInspectable = true
             }
             webView.navigationDelegate = self
-            
             return webView
         }()
     }
@@ -57,8 +57,6 @@ public final class WKWebViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.spinner.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(webView)
@@ -86,7 +84,6 @@ extension WKWebViewController: WKNavigationDelegate {
                 print("javascript error: \(error)")
             }
         }
-        
     }
     
     private func evaluateJavascript(_ javascript: String, sourceURL: String? = nil, completion: ((_ error: String) -> Void)? = nil) {
