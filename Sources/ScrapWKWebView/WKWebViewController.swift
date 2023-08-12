@@ -12,18 +12,10 @@ import WebKit
 let MESSAGE_HANDLER_NAME = "WKWebViewMessageHandler"
 
 public final class WKWebViewController: UIViewController {
-    private let spinner: UIActivityIndicatorView = {
-        if #available(iOS 13.0, *) {
-            return UIActivityIndicatorView(style: .large)
-        } else {
-            return UIActivityIndicatorView(style: .whiteLarge)
-        }
-    }()
-    
     var delegate: ScrapWKWebViewDelegate?
     var timeout: Double = 2.0
     var webView: WKWebView!
-    var showWebView = false
+    var isScrappingWebView = true
     
     var webURL: String = "" {
         didSet {
@@ -38,7 +30,7 @@ public final class WKWebViewController: UIViewController {
         self.webView = {
             let webConfiguration = WKWebViewConfiguration()
             
-            if !showWebView {
+            if isScrappingWebView {
                 let wkUserController = WKUserContentController()
                 wkUserController.add(self, name: MESSAGE_HANDLER_NAME)
                 webConfiguration.userContentController = wkUserController
@@ -58,16 +50,16 @@ public final class WKWebViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.webView.translatesAutoresizingMaskIntoConstraints = false
-        self.spinner.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(webView)
-        self.view.addSubview(spinner)
         
-        spinner.startAnimating()
-        
-        NSLayoutConstraint.activate([
-            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+        if !isScrappingWebView {
+            NSLayoutConstraint.activate([
+                webView.topAnchor.constraint(equalTo: view.topAnchor),
+                webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                webView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
+        }
     }
 }
 

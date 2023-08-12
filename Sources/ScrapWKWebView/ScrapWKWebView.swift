@@ -19,20 +19,20 @@ public struct ScrapWKWebView: UIViewControllerRepresentable {
     public typealias HTMLClosure = (_ html: String) -> Void
     
     var url: String
-    var showWebView = false
+    var isScrappingWebView = true
     var getHTML: HTMLClosure?
     var timeout: Double = 2.0
     
     public init(url: String, showWebView: Bool) {
         self.url = url
-        self.showWebView = showWebView
+        self.isScrappingWebView = showWebView
     }
     
     public init(url: String, showWebView: Bool = false, getHTML: @escaping HTMLClosure, timeout: Double) {
         self.url = url
         self.getHTML = getHTML
         self.timeout = timeout
-        self.showWebView = showWebView
+        self.isScrappingWebView = showWebView
     }
     
     public class Coordinator: NSObject, ScrapWKWebViewDelegate {
@@ -48,12 +48,12 @@ public struct ScrapWKWebView: UIViewControllerRepresentable {
     
     public func makeUIViewController(context: Context) -> UIViewControllerType {
         let vc = WKWebViewController()
-        if !showWebView {
+        if isScrappingWebView {
             vc.delegate = context.coordinator
         }
         vc.timeout = timeout
         vc.webURL = url
-        vc.showWebView = showWebView
+        vc.isScrappingWebView = isScrappingWebView
         return vc
     }
     
